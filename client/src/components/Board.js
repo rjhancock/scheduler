@@ -47,7 +47,7 @@ const Board = () => {
 	const [, drop] = useDrop(() => ({ accept: ItemTypes.TICKET, }));
 
 	return (
-		<div ref={drop} style={{ width: 400, }}>
+		<div ref={drop} style={{ width: 400, margin: '2rem auto', }}>
 			{tickets.map((ticket) => {
 				return <Ticket data={ticket} moveTicket={moveTicket} findTicket={findTicket} />
 			})}

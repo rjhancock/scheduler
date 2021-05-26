@@ -47,14 +47,15 @@ const Ticket = ({ data, moveTicket, findTicket }) => {
 				border: '1px dashed gray',
 				padding: '0.5rem 1rem',
 				marginBottom: '.5rem',
-				backgroundColor: 'white',
+				color: 'white',
+				backgroundColor: data.color,
 				cursor: 'move',
 				opacity,
 			}}
 		>
 			{data.id}
 		</div>
-	)
+	);
 }
 
-export default Ticket
+export default Ticket;
