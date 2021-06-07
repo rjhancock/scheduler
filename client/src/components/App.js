@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+import { useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 
-import initialData from "../initial-data";
-import Column from "./Column/Column";
+import initialData from '../initial-data';
+import Column from './Column/Column';
 
-import "./App.css";
+import './App.css';
 
 const App = () => {
 	const [state, setState] = useState(initialData);
@@ -45,8 +45,10 @@ const App = () => {
 		const start = state.columns[source.droppableId];
 		const finish = state.columns[destination.droppableId];
 
+		// Handle staying in the same column
 		if (start === finish) return dropSame(source, destination, draggableId);
 
+		// Handle moving columns
 		const startTaskIds = Array.from(start.ticketIds);
 		startTaskIds.splice(source.index, 1);
 		const newStart = {

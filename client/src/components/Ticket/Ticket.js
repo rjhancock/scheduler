@@ -1,6 +1,6 @@
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable } from 'react-beautiful-dnd';
 
-import "./Ticket.css";
+import './Ticket.css';
 
 const Ticket = ({ ticket, index }) => {
 	return (
@@ -11,7 +11,7 @@ const Ticket = ({ ticket, index }) => {
 		>
 			{(provided, snapshot) => (
 				<div
-					className={`ticket${snapshot.isDragging ? " drag" : ""}`}
+					className={`ticket${snapshot.isDragging ? ' drag' : ''}`}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
