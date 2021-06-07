@@ -15,7 +15,14 @@ h3 {
 }
 
 .ticket-list {
+	background-color: white;
 	padding: 8px;
 	outline: 1px solid red;
 	flex: 1 1 auto;
+	transition: background-color 0.5s ease;
+	min-height: 50px;
+}
+
+.drop {
+	background-color: skyblue;
 }
