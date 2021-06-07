@@ -1,10 +1,5 @@
-
 const Board = () => {
-	return (
-		<div>
+	return <div></div>;
+};
 
-		</div>
-	)
-}
-
-export default Board
+export default Board;
