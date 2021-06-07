@@ -4,4 +4,9 @@
 	border-radius: 2px;
 	padding: 8px;
 	margin-bottom: 8px;
+	transition: background-color 0.5s ease;
+}
+
+.drag {
+	background-color: lightgreen;
 }

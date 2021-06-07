@@ -1,13 +1,17 @@
+import { Draggable } from "react-beautiful-dnd";
 
-import { Draggable } from 'react-beautiful-dnd';
+import "./Ticket.css";
 
-import './Ticket.css'
-
-const Ticket = ({ticket, index}) => {
+const Ticket = ({ ticket, index }) => {
 	return (
-		<Draggable draggableId={ticket.id} index={index}>
-			{(provided) => (
-				<div className="ticket"
+		<Draggable
+			draggableId={ticket.id}
+			index={index}
+			// isDragDisabled={true} // Prevents this draggable from being dragged
+		>
+			{(provided, snapshot) => (
+				<div
+					className={`ticket${snapshot.isDragging ? " drag" : ""}`}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
@@ -17,6 +21,6 @@ const Ticket = ({ticket, index}) => {
 			)}
 		</Draggable>
 	);
-}
+};
 
 export default Ticket;
