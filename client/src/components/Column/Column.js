@@ -1,6 +1,12 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import Ticket from '../Ticket/Ticket';
+import ActionList from '../ActionList/ActionList';
 
 import './Column.css';
 
@@ -14,6 +20,17 @@ const Column = ({ column, tickets, index }) => {
 					ref={provided.innerRef}
 				>
 					<h3 {...provided.dragHandleProps}>{column.title}</h3>
+					<ActionList>
+						<IconButton className="test" aria-label="edit">
+							<EditIcon />
+						</IconButton>
+						<IconButton aria-label="delete">
+							<DeleteIcon />
+						</IconButton>
+						<IconButton aria-label="add">
+							<AddIcon />
+						</IconButton>
+					</ActionList>
 					<Droppable droppableId={column.id} type="ticket">
 						{(provided, snapshot) => (
 							<div

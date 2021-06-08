@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+
 import initialData from '../../initial-data';
 import Column from '../Column/Column';
+import ActionList from '../ActionList/ActionList';
 
 import './Board.css';
+
+let COLUMN_ID = 0;
 
 const Board = () => {
 	const [state, setState] = useState(initialData);
@@ -89,42 +96,72 @@ const Board = () => {
 		setState(newState);
 	};
 
+	const addColumn = () => {
+		const id = (COLUMN_ID++).toString();
+
+		const newState = {
+			...state,
+			columns: {
+				...state.columns,
+				[id]: {
+					id,
+					title: 'New Column',
+					ticketIds: [],
+				},
+			},
+			columnOrder: [...state.columnOrder, id],
+		};
+
+		setState(newState);
+	};
+
 	return (
 		<DragDropContext
 			// onDragStart
 			// onDragUpdate
 			onDragEnd={onDragEnd}
 		>
-			<Droppable
-				droppableId="all-columns"
-				direction="horizontal"
-				type="column"
-			>
-				{(provided) => (
-					<div
-						className="board"
-						{...provided.droppableProps}
-						ref={provided.innerRef}
-					>
-						{state.columnOrder.map((cid, index) => {
-							const column = state.columns[cid];
-							const tickets = column.ticketIds.map(
-								(tid) => state.tickets[tid]
-							);
+			<div className="container">
+				<h2>My Projects</h2>
+				<ActionList>
+					<IconButton className="test" aria-label="edit">
+						<EditIcon />
+					</IconButton>
+					<IconButton aria-label="add" onClick={() => addColumn()}>
+						<AddIcon />
+					</IconButton>
+				</ActionList>
+				<Droppable
+					droppableId="all-columns"
+					direction="horizontal"
+					type="column"
+				>
+					{(provided) => (
+						<div
+							className="board"
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
+							{state.columnOrder.map((cid, index) => {
+								const column = state.columns[cid];
+								const tickets = column.ticketIds.map(
+									(tid) => state.tickets[tid]
+								);
 
-							return (
-								<Column
-									key={column.id}
-									column={column}
-									tickets={tickets}
-									index={index}
-								/>
-							);
-						})}
-						{provided.placeholder}
-					</div>
-				)}
-			</Droppable>
+								return (
+									<Column
+										key={column.id}
+										column={column}
+										tickets={tickets}
+										index={index}
+									/>
+								);
+							})}
+							{provided.placeholder}
+						</div>
+					)}
+				</Droppable>
+			</div>
 		</DragDropContext>
 	);
 };

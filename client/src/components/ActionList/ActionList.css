@@ -1,0 +1,7 @@
+.actions {
+	display: flex;
+}
+
+.action-item {
+	flex: 1;
+}
