@@ -8,12 +8,12 @@ const initialData = {
 	columns: {
 		'column-1': {
 			id: 'column-1',
-			title: 'To do',
+			title: 'Backlog',
 			ticketIds: ['ticket-1', 'ticket-2', 'ticket-3', 'ticket-4'],
 		},
 		'column-2': {
 			id: 'column-2',
-			title: 'Done did',
+			title: 'Drafting',
 			ticketIds: [],
 		},
 		'column-3': {
@@ -26,9 +26,26 @@ const initialData = {
 			title: 'Shading',
 			ticketIds: [],
 		},
+		'column-5': {
+			id: 'column-5',
+			title: 'Done',
+			ticketIds: [],
+		},
+		'column-6': {
+			id: 'column-6',
+			title: 'Archived',
+			ticketIds: [],
+		},
 	},
 	// Facilitate reordering of the columns
-	columnOrder: ['column-1', 'column-2', 'column-3', 'column-4'],
+	columnOrder: [
+		'column-1',
+		'column-2',
+		'column-3',
+		'column-4',
+		'column-5',
+		'column-6',
+	],
 };
 
 export default initialData;
