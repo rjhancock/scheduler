@@ -1,119 +1,74 @@
-import { useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { RENAME } from '../../features/title/titleSlice';
+import {
+	MOVE_TICKET,
+	// RENAME_COLUMN,
+	REORDER_COLUMNS,
+	REORDER_TICKETS,
+} from '../../features/columns/columnsSlice';
 
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
-import initialData from '../../initial-data';
 import Column from '../Column/Column';
 import ActionList from '../ActionList/ActionList';
 
 import './Board.css';
 
-let COLUMN_ID = 0;
-
 const Board = () => {
-	const [state, setState] = useState(initialData);
+	const title = useSelector((state) => state.title);
+	const columns = useSelector((state) => state.columns);
 
-	const isSameLocation = (src, dst) =>
-		dst.droppableId === src.droppableId && dst.index === src.index;
+	const dispatch = useDispatch();
 
-	const dropSame = (src, dst, ticket) => {
-		const column = state.columns[src.droppableId];
+	const isSameColumn = (src, dst) => src.droppableId === dst.droppableId;
 
-		const newTicketIds = Array.from(column.ticketIds);
-		newTicketIds.splice(src.index, 1);
-		newTicketIds.splice(dst.index, 0, ticket);
-
-		const newColumn = {
-			...column,
-			ticketIds: newTicketIds,
-		};
-
-		const newState = {
-			...state,
-			columns: {
-				...state.columns,
-				[newColumn.id]: newColumn,
-			},
-		};
-
-		setState(newState);
-	};
+	const didNotMove = (src, dst) =>
+		isSameColumn(src, dst) && src.index === dst.index;
 
 	const onDragEnd = (result) => {
 		const { destination, source, draggableId, type } = result;
 
 		// No need to update state if nothing changes
 		if (!destination) return;
-		if (isSameLocation(source, destination)) return;
+		if (didNotMove(source, destination)) return;
 
+		// Handle column reorder
 		if (type === 'column') {
-			const newColumnOrder = Array.from(state.columnOrder);
-			newColumnOrder.splice(source.index, 1);
-			newColumnOrder.splice(destination.index, 0, draggableId);
-
-			const newState = {
-				...state,
-				columnOrder: newColumnOrder,
-			};
-
-			setState(newState);
-			return;
+			return dispatch(
+				REORDER_COLUMNS({
+					source: source.index,
+					destination: destination.index,
+					column: draggableId,
+				})
+			);
 		}
 
-		const home = state.columns[source.droppableId];
-		const foreign = state.columns[destination.droppableId];
-
 		// Handle staying in the same column
-		if (home === foreign) return dropSame(source, destination, draggableId);
+		if (isSameColumn(source, destination)) {
+			return dispatch(
+				REORDER_TICKETS({
+					source,
+					destination,
+					ticket: draggableId,
+				})
+			);
+		}
 
-		// Handle moving columns
-		const startTaskIds = Array.from(home.ticketIds);
-		startTaskIds.splice(source.index, 1);
-		const newStart = {
-			...home,
-			ticketIds: startTaskIds,
-		};
-
-		const finishTaskIds = Array.from(foreign.ticketIds);
-		finishTaskIds.splice(destination.index, 0, draggableId);
-		const newFinish = {
-			...foreign,
-			ticketIds: finishTaskIds,
-		};
-
-		const newState = {
-			...state,
-			columns: {
-				...state.columns,
-				[newStart.id]: newStart,
-				[newFinish.id]: newFinish,
-			},
-		};
-
-		setState(newState);
+		// Handle ticket moving columns
+		return dispatch(
+			MOVE_TICKET({
+				source,
+				destination,
+				ticket: draggableId,
+			})
+		);
 	};
 
-	const addColumn = () => {
-		const id = (COLUMN_ID++).toString();
-
-		const newState = {
-			...state,
-			columns: {
-				...state.columns,
-				[id]: {
-					id,
-					title: 'New Column',
-					ticketIds: [],
-				},
-			},
-			columnOrder: [...state.columnOrder, id],
-		};
-
-		setState(newState);
-	};
+	const addColumn = () => {};
 
 	return (
 		<DragDropContext
@@ -122,9 +77,12 @@ const Board = () => {
 			onDragEnd={onDragEnd}
 		>
 			<div className="container">
-				<h2>My Projects</h2>
+				<h2>{title}</h2>
 				<ActionList>
-					<IconButton className="test" aria-label="edit">
+					<IconButton
+						aria-label="edit"
+						onClick={() => dispatch(RENAME('Renamed Projects'))}
+					>
 						<EditIcon />
 					</IconButton>
 					<IconButton aria-label="add" onClick={() => addColumn()}>
@@ -142,17 +100,14 @@ const Board = () => {
 							{...provided.droppableProps}
 							ref={provided.innerRef}
 						>
-							{state.columnOrder.map((cid, index) => {
-								const column = state.columns[cid];
-								const tickets = column.ticketIds.map(
-									(tid) => state.tickets[tid]
-								);
+							{columns.order.map((cid, index) => {
+								const column = columns[cid];
 
 								return (
 									<Column
-										key={column.id}
+										key={cid}
+										id={cid}
 										column={column}
-										tickets={tickets}
 										index={index}
 									/>
 								);

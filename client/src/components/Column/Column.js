@@ -1,4 +1,5 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useSelector, useDispatch } from 'react-redux';
 
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
@@ -10,9 +11,11 @@ import ActionList from '../ActionList/ActionList';
 
 import './Column.css';
 
-const Column = ({ column, tickets, index }) => {
+const Column = ({ id, column, index }) => {
+	const tickets = useSelector((state) => state.tickets);
+
 	return (
-		<Draggable draggableId={column.id} index={index}>
+		<Draggable draggableId={id} index={index}>
 			{(provided) => (
 				<div
 					className="col"
@@ -31,7 +34,7 @@ const Column = ({ column, tickets, index }) => {
 							<AddIcon />
 						</IconButton>
 					</ActionList>
-					<Droppable droppableId={column.id} type="ticket">
+					<Droppable droppableId={id} type="ticket">
 						{(provided, snapshot) => (
 							<div
 								className={`ticket-list${
@@ -40,13 +43,18 @@ const Column = ({ column, tickets, index }) => {
 								{...provided.droppableProps}
 								ref={provided.innerRef}
 							>
-								{tickets.map((ticket, index) => (
-									<Ticket
-										key={ticket.id}
-										ticket={ticket}
-										index={index}
-									/>
-								))}
+								{column.ticketIds.map((tid, index) => {
+									const ticket = tickets[tid];
+
+									return (
+										<Ticket
+											key={tid}
+											id={tid}
+											ticket={ticket}
+											index={index}
+										/>
+									);
+								})}
 								{provided.placeholder}
 							</div>
 						)}
