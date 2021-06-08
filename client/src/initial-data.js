@@ -1,51 +1,38 @@
 const initialData = {
 	tickets: {
-		'ticket-1': { id: 'ticket-1', content: 'Take out the garbage' },
-		'ticket-2': { id: 'ticket-2', content: 'Watch my favorite show' },
-		'ticket-3': { id: 'ticket-3', content: 'Charge my phone' },
-		'ticket-4': { id: 'ticket-4', content: 'Cook dinner' },
+		t0: { content: 'Take out the garbage' },
+		t1: { content: 'Watch my favorite show' },
+		t2: { content: 'Charge my phone' },
+		t3: { content: 'Cook dinner' },
 	},
 	columns: {
-		'column-1': {
-			id: 'column-1',
+		order: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5'],
+		c0: {
 			title: 'Backlog',
-			ticketIds: ['ticket-1', 'ticket-2', 'ticket-3', 'ticket-4'],
+			ticketIds: ['t0', 't1', 't2', 't3'],
 		},
-		'column-2': {
-			id: 'column-2',
+		c1: {
 			title: 'Drafting',
 			ticketIds: [],
 		},
-		'column-3': {
-			id: 'column-3',
+		c2: {
 			title: 'Linework',
 			ticketIds: [],
 		},
-		'column-4': {
-			id: 'column-4',
+		c3: {
 			title: 'Shading',
 			ticketIds: [],
 		},
-		'column-5': {
-			id: 'column-5',
+		c4: {
 			title: 'Done',
 			ticketIds: [],
 		},
-		'column-6': {
-			id: 'column-6',
+		c5: {
 			title: 'Archived',
 			ticketIds: [],
 		},
 	},
-	// Facilitate reordering of the columns
-	columnOrder: [
-		'column-1',
-		'column-2',
-		'column-3',
-		'column-4',
-		'column-5',
-		'column-6',
-	],
+	title: 'My Projects',
 };
 
 export default initialData;
