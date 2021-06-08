@@ -4,6 +4,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import initialData from '../../initial-data';
 import Column from '../Column/Column';
 
+import './Board.css';
+
 const Board = () => {
 	const [state, setState] = useState(initialData);
 
