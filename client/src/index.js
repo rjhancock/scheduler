@@ -1,12 +1,23 @@
+// React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import '@atlaskit/css-reset';
+
+// Redux
+import { Provider } from 'react-redux';
+import store from './app/store';
+
+// Components
 import App from './components/App';
+
+// Stylesheets
+import '@atlaskit/css-reset';
+import './index.css';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<Provider store={store}>
+			<App />
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );
