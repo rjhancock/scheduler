@@ -3,33 +3,52 @@ import { createSlice } from '@reduxjs/toolkit';
 export const columnsSlice = createSlice({
 	name: 'columns',
 	initialState: {
-		order: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
-		c1: {
+		cid: 6,
+		order: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5'],
+		c0: {
 			title: 'Backlog',
-			ticketIds: ['t1', 't2', 't3', 't4'],
+			ticketIds: ['t0', 't1', 't2', 't3'],
 		},
-		c2: {
+		c1: {
 			title: 'Drafting',
 			ticketIds: [],
 		},
-		c3: {
-			title: 'Linework',
+		c2: {
+			title: 'Line Work',
 			ticketIds: [],
 		},
-		c4: {
+		c3: {
 			title: 'Shading',
 			ticketIds: [],
 		},
-		c5: {
+		c4: {
 			title: 'Done',
 			ticketIds: [],
 		},
-		c6: {
+		c5: {
 			title: 'Archived',
 			ticketIds: [],
 		},
 	},
 	reducers: {
+		ADD_COLUMN: (state) => {
+			const newId = `c${state.cid++}`;
+			state.order.push(newId);
+
+			state[newId] = {
+				title: 'New Column',
+				ticketIds: [],
+			};
+
+			return state;
+		},
+		RENAME_COLUMN: (state, action) => {},
+		REORDER_COLUMNS: (state, action) => {
+			const { source, destination, column } = action.payload;
+			state.order.splice(source, 1);
+			state.order.splice(destination, 0, column);
+			return state;
+		},
 		MOVE_TICKET: (state, action) => {
 			const { source, destination, ticket } = action.payload;
 
@@ -49,17 +68,15 @@ export const columnsSlice = createSlice({
 			ticketIds.splice(destination.index, 0, ticket);
 			return state;
 		},
-		RENAME_COLUMN: (state, action) => {},
-		REORDER_COLUMNS: (state, action) => {
-			const { source, destination, column } = action.payload;
-			state.order.splice(source, 1);
-			state.order.splice(destination, 0, column);
-			return state;
-		},
 	},
 });
 
-export const { MOVE_TICKET, RENAME_COLUMN, REORDER_COLUMNS, REORDER_TICKETS } =
-	columnsSlice.actions;
+export const {
+	ADD_COLUMN,
+	RENAME_COLUMN,
+	REORDER_COLUMNS,
+	MOVE_TICKET,
+	REORDER_TICKETS,
+} = columnsSlice.actions;
 
 export default columnsSlice.reducer;

@@ -6,6 +6,7 @@ const initialData = {
 		t3: { content: 'Cook dinner' },
 	},
 	columns: {
+		cid: 6,
 		order: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5'],
 		c0: {
 			title: 'Backlog',
@@ -16,7 +17,7 @@ const initialData = {
 			ticketIds: [],
 		},
 		c2: {
-			title: 'Linework',
+			title: 'Line Work',
 			ticketIds: [],
 		},
 		c3: {
