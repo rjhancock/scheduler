@@ -8,8 +8,8 @@
 	display: flex;
 	outline: 1px solid green;
 	flex: 1;
-	min-height: 800px;
 	overflow-x: auto;
+	min-height: 70vh;
 }
 
 .container h2 {

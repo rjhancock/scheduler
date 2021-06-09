@@ -1,31 +1,25 @@
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { RENAME } from '../../features/title/titleSlice';
 import {
+	// ADD_COLUMN,
 	MOVE_TICKET,
 	// RENAME_COLUMN,
 	REORDER_COLUMNS,
 	REORDER_TICKETS,
 } from '../../features/columns/columnsSlice';
 
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-
 import Column from '../Column/Column';
-import ActionList from '../ActionList/ActionList';
+import Header from './Header/Header';
 
 import './Board.css';
 
 const Board = () => {
 	const title = useSelector((state) => state.title);
 	const columns = useSelector((state) => state.columns);
-
 	const dispatch = useDispatch();
 
 	const isSameColumn = (src, dst) => src.droppableId === dst.droppableId;
-
 	const didNotMove = (src, dst) =>
 		isSameColumn(src, dst) && src.index === dst.index;
 
@@ -68,8 +62,6 @@ const Board = () => {
 		);
 	};
 
-	const addColumn = () => {};
-
 	return (
 		<DragDropContext
 			// onDragStart
@@ -77,18 +69,7 @@ const Board = () => {
 			onDragEnd={onDragEnd}
 		>
 			<div className="container">
-				<h2>{title}</h2>
-				<ActionList>
-					<IconButton
-						aria-label="edit"
-						onClick={() => dispatch(RENAME('Renamed Projects'))}
-					>
-						<EditIcon />
-					</IconButton>
-					<IconButton aria-label="add" onClick={() => addColumn()}>
-						<AddIcon />
-					</IconButton>
-				</ActionList>
+				<Header />
 				<Droppable
 					droppableId="all-columns"
 					direction="horizontal"
