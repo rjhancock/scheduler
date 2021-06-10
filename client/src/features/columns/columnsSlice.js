@@ -42,6 +42,14 @@ export const columnsSlice = createSlice({
 
 			return state;
 		},
+		DELETE_COLUMN: (state, action) => {
+			const { cid } = action.payload;
+
+			state.order = state.order.filter((id) => cid !== id);
+			delete state[cid];
+
+			return state;
+		},
 		RENAME_COLUMN: (state, action) => {},
 		REORDER_COLUMNS: (state, action) => {
 			const { source, destination, column } = action.payload;
@@ -73,6 +81,7 @@ export const columnsSlice = createSlice({
 
 export const {
 	ADD_COLUMN,
+	DELETE_COLUMN,
 	RENAME_COLUMN,
 	REORDER_COLUMNS,
 	MOVE_TICKET,

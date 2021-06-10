@@ -9,10 +9,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Ticket from '../Ticket/Ticket';
 import ActionList from '../ActionList/ActionList';
 
+import { DELETE_COLUMN } from '../../features/columns/columnsSlice';
+
 import './Column.css';
 
 const Column = ({ id, column, index }) => {
 	const tickets = useSelector((state) => state.tickets);
+	const dispatch = useDispatch();
 
 	return (
 		<Draggable draggableId={id} index={index}>
@@ -24,14 +27,11 @@ const Column = ({ id, column, index }) => {
 				>
 					<h3 {...provided.dragHandleProps}>{column.title}</h3>
 					<ActionList>
-						<IconButton className="test" aria-label="edit">
-							<EditIcon />
-						</IconButton>
-						<IconButton aria-label="delete">
+						<IconButton
+							aria-label="delete"
+							onClick={() => dispatch(DELETE_COLUMN({ cid: id }))}
+						>
 							<DeleteIcon />
-						</IconButton>
-						<IconButton aria-label="add">
-							<AddIcon />
 						</IconButton>
 					</ActionList>
 					<Droppable droppableId={id} type="ticket">
