@@ -1,6 +1,8 @@
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 
+import Button from '@material-ui/core/Button';
+
 import {
 	// ADD_COLUMN,
 	MOVE_TICKET,
@@ -97,6 +99,9 @@ const Board = () => {
 						</div>
 					)}
 				</Droppable>
+				<Button href="/request" variant="contained" color="primary">
+					Make a Request
+				</Button>
 			</div>
 		</DragDropContext>
 	);
