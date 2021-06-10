@@ -1,9 +1,10 @@
 import './ActionList.css';
 
 const ActionList = ({ children, collapse }) => {
+	const myChildren = [].concat(children);
 	return (
 		<div className="actions">
-			{children?.map((child) => ({
+			{myChildren?.map((child) => ({
 				...child,
 				props: {
 					...child.props,
