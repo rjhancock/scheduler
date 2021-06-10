@@ -1,14 +1,10 @@
-import Board from './Board/Board';
-
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Home, SignUp, Login, Artists, Request } from '../pages';
 
-import Home from '../views/Home';
-import SignUp from '../views/SignUp';
-import Navigation from './Navigation/Navigation';
-import Artists from '../views/Artists';
+import Board from './Board/Board';
+import NavigationPage from './NavigationPage/NavigationPage';
 
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 
 import './App.css';
 
@@ -17,12 +13,28 @@ const App = () => {
 		<>
 			<Router>
 				<Container className="flex">
-					<Navigation />
 					<Switch>
 						<Route path="/" exact component={() => <Home />} />
-						<Route path="/cypuss" exact component={() => <Board />} />
 						<Route path="/signup" exact component={() => <SignUp />} />
-						<Route path="/artists" exact component={() => <Artists />} />
+						<Route path="/login" exact component={() => <Login />} />
+						<Route path="/request" exact component={() => <Request />} />
+						<Route
+							path="/artists"
+							exact
+							component={() => (
+								<NavigationPage>
+									<Artists />
+								</NavigationPage>
+							)}
+						/>
+						<Route
+							path="/:artist"
+							component={() => (
+								<NavigationPage>
+									<Board />
+								</NavigationPage>
+							)}
+						/>
 					</Switch>
 				</Container>
 			</Router>
