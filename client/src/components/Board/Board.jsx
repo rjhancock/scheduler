@@ -1,8 +1,6 @@
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Button from '@material-ui/core/Button';
-
 import {
 	// ADD_COLUMN,
 	MOVE_TICKET,
@@ -12,7 +10,6 @@ import {
 } from '../../features/columns/columnsSlice';
 
 import Column from '../Column/Column';
-import Header from './Header/Header';
 
 import './Board.css';
 
@@ -71,7 +68,6 @@ const Board = () => {
 			onDragEnd={onDragEnd}
 		>
 			<div className="container">
-				<Header />
 				<Droppable
 					droppableId="all-columns"
 					direction="horizontal"
@@ -99,9 +95,6 @@ const Board = () => {
 						</div>
 					)}
 				</Droppable>
-				<Button href="/request" variant="contained" color="primary">
-					Make a Request
-				</Button>
 			</div>
 		</DragDropContext>
 	);
