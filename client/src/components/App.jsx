@@ -1,8 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, SignUp, Login, Artists, Request } from '../pages';
-
-import Board from './Board/Board';
-import NavigationPage from './NavigationPage/NavigationPage';
+import { Home, Dashboard, SignUp, Login, Artists, Request } from '../pages';
 
 import Container from '@material-ui/core/Container';
 
@@ -12,28 +9,16 @@ const App = () => {
 	return (
 		<>
 			<Router>
-				<Container className="flex">
+				<Container>
 					<Switch>
 						<Route path="/" exact component={() => <Home />} />
 						<Route path="/signup" exact component={() => <SignUp />} />
 						<Route path="/login" exact component={() => <Login />} />
 						<Route path="/request" exact component={() => <Request />} />
+						<Route path="/artists" exact component={() => <Artists />} />
 						<Route
-							path="/artists"
-							exact
-							component={() => (
-								<NavigationPage>
-									<Artists />
-								</NavigationPage>
-							)}
-						/>
-						<Route
-							path="/:artist"
-							component={() => (
-								<NavigationPage>
-									<Board />
-								</NavigationPage>
-							)}
+							path="/artist/:artist"
+							component={() => <Dashboard />}
 						/>
 					</Switch>
 				</Container>
