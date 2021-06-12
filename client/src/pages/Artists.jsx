@@ -1,5 +1,5 @@
-import Navigation from '../components/Navigation/Navigation';
-import ArtistCard from '../components/ArtistCard/ArtistCard';
+import Navigation from '../components/Navigation';
+import ArtistCard from '../components/ArtistCard';
 
 const Artists = () => {
 	return (

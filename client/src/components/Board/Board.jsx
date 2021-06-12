@@ -9,7 +9,7 @@ import {
 	REORDER_TICKETS,
 } from '../../features/columns/columnsSlice';
 
-import Column from '../Column/Column';
+import Column from '../Column';
 
 import './Board.css';
 

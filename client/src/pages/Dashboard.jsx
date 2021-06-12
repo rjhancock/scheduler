@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 
-import Board from '../components/Board/Board';
-import Navigation from '../components/Navigation/Navigation';
+import Board from '../components/Board';
+import Navigation from '../components/Navigation';
 
 const Dashboard = () => {
 	return (

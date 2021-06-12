@@ -6,8 +6,8 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import Ticket from '../Ticket/Ticket';
-import ActionList from '../ActionList/ActionList';
+import Ticket from '../Ticket';
+import ActionList from '../ActionList';
 
 import { DELETE_COLUMN } from '../../features/columns/columnsSlice';
 

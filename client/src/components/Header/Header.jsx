@@ -12,7 +12,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import TextField from '@material-ui/core/TextField';
 
-import ActionList from '../../ActionList/ActionList';
+import ActionList from '../ActionList';
 
 const Header = () => {
 	const title = useSelector((state) => state.title);
