@@ -14,7 +14,6 @@ import Column from '../Column';
 import './Board.css';
 
 const Board = () => {
-	const title = useSelector((state) => state.title);
 	const columns = useSelector((state) => state.columns);
 	const dispatch = useDispatch();
 

@@ -2,8 +2,6 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import Ticket from '../Ticket';
