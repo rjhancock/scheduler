@@ -9,18 +9,44 @@ import {
 	Typography,
 } from '@material-ui/core';
 
+import { makeStyles } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+const useStyles = makeStyles({
+	root: {
+		maxWidth: 300,
+	},
+	media: {
+		height: 300,
+	},
+	chip: {
+		display: 'flex',
+		flexFlow: 'row wrap',
+	},
+});
+
 const ArtistCard = () => {
+	const classes = useStyles();
+
 	return (
-		<Card>
-			<CardMedia image="" title="" />
+		<Card className={classes.root}>
+			<CardMedia
+				className={classes.media}
+				image="https://picsum.photos/200/300"
+			/>
 			<CardContent>
-				<Typography gutterBottom variant="h5" component="h2">
+				<Typography variant="h5" component="h2">
 					Cypuss
 				</Typography>
 			</CardContent>
-			<CardActions>
+			<CardActions className={classes.chip}>
+				<Chip label="Tags" component="a" href="" clickable />
+				<Chip label="Tags" component="a" href="" clickable />
+				<Chip label="Tags" component="a" href="" clickable />
+				<Chip label="Tags" component="a" href="" clickable />
+				<Chip label="Tags" component="a" href="" clickable />
+				<Chip label="Tags" component="a" href="" clickable />
+				<Chip label="Tags" component="a" href="" clickable />
 				<Chip label="Tags" component="a" href="" clickable />
 			</CardActions>
 			<CardActions>
