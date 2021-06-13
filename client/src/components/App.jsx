@@ -1,5 +1,13 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, Dashboard, SignUp, Login, Artists, Request } from '../pages';
+import {
+	Artists,
+	Dashboard,
+	Gallery,
+	Home,
+	Login,
+	Request,
+	SignUp,
+} from '../pages';
 
 import './App.css';
 
@@ -13,7 +21,14 @@ const App = () => {
 					<Route path="/login" exact component={() => <Login />} />
 					<Route path="/request" exact component={() => <Request />} />
 					<Route path="/artists" exact component={() => <Artists />} />
-					<Route path="/artist/:artist" component={() => <Dashboard />} />
+					<Route
+						path="/artist/:artist/gallery"
+						component={() => <Gallery />}
+					/>
+					<Route
+						path="/artist/:artist"
+						component={() => <Dashboard />}
+					></Route>
 				</Switch>
 			</Router>
 		</>
