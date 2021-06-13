@@ -104,11 +104,11 @@ const SignUp = () => {
 					</Grid>
 					<Grid item xs={12}>
 						<FormControl component="fieldset">
-							<Typography component="legend">I am a(n)</Typography>
+							<Typography component="legend">I am a</Typography>
 							<RadioGroup>
 								<FormControlLabel
-									value="artist"
-									label="Artist"
+									value="creator"
+									label="Creator"
 									control={<Radio />}
 								/>
 								<FormControlLabel

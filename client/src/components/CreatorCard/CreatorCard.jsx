@@ -53,7 +53,7 @@ const ArtistCard = () => {
 				<IconButton aria-label="add to favorites">
 					<FavoriteIcon />
 				</IconButton>
-				<Button size="small" color="primary" href="/artist/cypuss/gallery">
+				<Button size="small" color="primary" href="/cypuss/gallery">
 					Gallery
 				</Button>
 			</CardActions>

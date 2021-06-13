@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
-	Artists,
+	Creators,
 	Dashboard,
 	Gallery,
 	Home,
@@ -20,15 +20,13 @@ const App = () => {
 					<Route path="/signup" exact component={() => <SignUp />} />
 					<Route path="/login" exact component={() => <Login />} />
 					<Route path="/request" exact component={() => <Request />} />
-					<Route path="/artists" exact component={() => <Artists />} />
+					<Route path="/creators" exact component={() => <Creators />} />
 					<Route
-						path="/artist/:artist/gallery"
+						path="/:creator/gallery"
+						exact
 						component={() => <Gallery />}
 					/>
-					<Route
-						path="/artist/:artist"
-						component={() => <Dashboard />}
-					></Route>
+					<Route path="/:creator" exact component={() => <Dashboard />} />
 				</Switch>
 			</Router>
 		</>

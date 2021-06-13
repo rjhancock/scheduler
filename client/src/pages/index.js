@@ -1,4 +1,4 @@
-export { default as Artists } from './Artists';
+export { default as Creators } from './Creators';
 export { default as Dashboard } from './Dashboard';
 export { default as Gallery } from './Gallery';
 export { default as Home } from './Home';
