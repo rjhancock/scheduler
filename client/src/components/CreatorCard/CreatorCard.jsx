@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const ArtistCard = () => {
+const CreatorCard = () => {
 	const classes = useStyles();
 
 	return (
@@ -61,4 +61,4 @@ const ArtistCard = () => {
 	);
 };
 
-export default ArtistCard;
+export default CreatorCard;
