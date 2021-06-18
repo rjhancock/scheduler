@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import {
 	Box,
@@ -35,18 +37,77 @@ const Copyright = () => {
 };
 
 const SignUp = () => {
+	const [credentials, setCredentials] = useState({
+		username: '',
+		password: '',
+		confirm: '',
+	});
+	const [email, setEmail] = useState('');
+	const [role, setRole] = useState(0);
+	const [consent, setConsent] = useState({
+		terms: false,
+		privacy: false,
+	});
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const res = await axios.post('http://localhost:5000/api/auth/signup', {
+				username: credentials.username,
+				email,
+				password: credentials.password,
+				role,
+				consent,
+			});
+			console.log(res);
+		} catch (error) {
+			console.log(error);
+		}
+		// What can go wrong?
+		// 	Username is taken
+		// 	Email is registered
+		// 	Passwords don't match
+		// 	Consent not given
+		//
+		// Which of these are client side?
+		//		Email form
+		//		Passwords
+		//		Consent
+		//
+		//	Email checks
+		//		Email follows proper email form
+		// Password checks
+		//		Password === Confirm
+		// 	Password meets security requirements
+		// Consent checks
+		//		Boxes checked
+
+		// const res = axios('/auth', {
+		// 	username,
+		// 	email,
+		// 	password: pas,
+		// 	role,
+		// });
+	};
+
 	return (
 		<Container component="main" maxWidth="sm">
 			<Typography variant="h4" component="h1" align="center">
 				{'Sign Up Page'}
 			</Typography>
-			<form noValidate>
+			<form onSubmit={handleSubmit}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField
 							variant="outlined"
 							label="Username"
 							fullWidth
+							onChange={(e) =>
+								setCredentials({
+									...credentials,
+									username: e.target.value,
+								})
+							}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -61,8 +122,9 @@ const SignUp = () => {
 							variant="outlined"
 							label="Email"
 							type="email"
-							autoCapitalize="email"
+							autoComplete="email"
 							fullWidth
+							onChange={(e) => setEmail(e.target.value)}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -78,6 +140,12 @@ const SignUp = () => {
 							label="Password"
 							type="password"
 							fullWidth
+							onChange={(e) =>
+								setCredentials({
+									...credentials,
+									password: e.target.value,
+								})
+							}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -93,6 +161,12 @@ const SignUp = () => {
 							label="Confirm Password"
 							type="password"
 							fullWidth
+							onChange={(e) =>
+								setCredentials({
+									...credentials,
+									confirm: e.target.value,
+								})
+							}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -105,14 +179,17 @@ const SignUp = () => {
 					<Grid item xs={12}>
 						<FormControl component="fieldset">
 							<Typography component="legend">I am a</Typography>
-							<RadioGroup>
+							<RadioGroup
+								value={role.toString()}
+								onChange={(e) => setRole(parseInt(e.target.value))}
+							>
 								<FormControlLabel
-									value="creator"
+									value="1"
 									label="Creator"
 									control={<Radio />}
 								/>
 								<FormControlLabel
-									value="patron"
+									value="0"
 									label="Patron"
 									control={<Radio />}
 								/>
@@ -122,6 +199,12 @@ const SignUp = () => {
 					<Grid item xs={12}>
 						<FormControlLabel
 							control={<Checkbox />}
+							onChange={(e) => {
+								setConsent({
+									...consent,
+									terms: e.target.checked,
+								});
+							}}
 							label={
 								<Typography>
 									{'I have read and agree to the '}
@@ -131,6 +214,12 @@ const SignUp = () => {
 						/>
 						<FormControlLabel
 							control={<Checkbox />}
+							onChange={(e) => {
+								setConsent({
+									...consent,
+									privacy: e.target.checked,
+								});
+							}}
 							label={
 								<Typography>
 									{'I have read and agree to the '}
@@ -140,7 +229,12 @@ const SignUp = () => {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Button variant="contained" color="primary" fullWidth>
+						<Button
+							variant="contained"
+							color="primary"
+							type="submit"
+							fullWidth
+						>
 							Signup
 						</Button>
 					</Grid>

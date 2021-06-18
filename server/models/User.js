@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema(
 			required: true,
 			default: 0b00,
 		},
+		consent: {
+			terms: { type: Boolean, required: true, default: false },
+			privacy: { type: Boolean, required: true, default: false },
+		},
 		displayName: {
 			type: String,
 		},
@@ -37,5 +41,12 @@ const UserSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
+// Default display name to username
+UserSchema.pre('save', (next) => {
+	const user = this;
+	user.displayName = user.displayName || user.username;
+	next();
+});
 
 export default mongoose.model('User', UserSchema);
