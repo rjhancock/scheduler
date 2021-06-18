@@ -43,8 +43,9 @@ const UserSchema = new mongoose.Schema(
 );
 
 // Default display name to username
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function save(next) {
 	const user = this;
+	console.log(user);
 	user.displayName = user.displayName || user.username;
 	next();
 });

@@ -52,16 +52,16 @@ const SignUp = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const res = await axios.post('http://localhost:5000/api/auth/signup', {
+			const res = await axios.post('/auth/signup', {
 				username: credentials.username,
 				email,
 				password: credentials.password,
 				role,
 				consent,
 			});
-			console.log(res);
+			console.log({ res });
 		} catch (error) {
-			console.log(error);
+			console.log({ error });
 		}
 		// What can go wrong?
 		// 	Username is taken
