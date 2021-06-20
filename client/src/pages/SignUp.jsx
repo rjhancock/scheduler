@@ -10,17 +10,31 @@ import {
 	FormControl,
 	FormControlLabel,
 	Grid,
+	IconButton,
 	InputAdornment,
 	Radio,
 	RadioGroup,
 	TextField,
 	Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import PersonIcon from '@material-ui/icons/PersonOutlineOutlined';
-import PasswordIcon from '@material-ui/icons/LockOutlined';
-import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import PasswordIcon from '@material-ui/icons/LockOutlined';
+import ShowIcon from '@material-ui/icons/VisibilityOutlined';
+import HideIcon from '@material-ui/icons/VisibilityOffOutlined';
+import FailIcon from '@material-ui/icons/Close';
+import SuccessIcon from '@material-ui/icons/Check';
+
+const useStyles = makeStyles({
+	passed: {
+		color: 'green',
+	},
+	failed: {
+		color: 'red',
+	},
+});
 
 const Copyright = () => {
 	return (
@@ -37,10 +51,11 @@ const Copyright = () => {
 };
 
 const SignUp = () => {
-	const [credentials, setCredentials] = useState({
-		username: '',
-		password: '',
-		confirm: '',
+	const classes = useStyles();
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState({
+		val: '',
+		show: false,
 	});
 	const [email, setEmail] = useState('');
 	const [role, setRole] = useState(0);
@@ -49,23 +64,34 @@ const SignUp = () => {
 		privacy: false,
 	});
 
+	const [passValidation, setPassValidation] = useState({
+		length: false,
+		alpha: false,
+		digit: false,
+		special: false,
+	});
+
+	const [serverErrors, setServerErrors] = useState({});
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setServerErrors({});
 		try {
 			const res = await axios.post('/auth/signup', {
-				username: credentials.username,
+				username,
 				email,
-				password: credentials.password,
+				password: password.val,
 				role,
 				consent,
 			});
-			console.log({ res });
+			res.data && window.location.replace('/login');
 		} catch (error) {
-			console.log({ error });
+			setServerErrors(error.response.data);
 		}
 		// What can go wrong?
 		// 	Username is taken
 		// 	Email is registered
+		//		Email entered is not valid
 		// 	Passwords don't match
 		// 	Consent not given
 		//
@@ -99,15 +125,14 @@ const SignUp = () => {
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField
+							error={serverErrors.username ? true : false}
+							helperText={
+								serverErrors.username ? serverErrors.username : ''
+							}
 							variant="outlined"
 							label="Username"
 							fullWidth
-							onChange={(e) =>
-								setCredentials({
-									...credentials,
-									username: e.target.value,
-								})
-							}
+							onChange={(e) => setUsername(e.target.value)}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -119,6 +144,8 @@ const SignUp = () => {
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
+							error={serverErrors.email ? true : false}
+							helperText={serverErrors.email ? serverErrors.email : ''}
 							variant="outlined"
 							label="Email"
 							type="email"
@@ -138,39 +165,81 @@ const SignUp = () => {
 						<TextField
 							variant="outlined"
 							label="Password"
-							type="password"
+							type={password.show ? 'text' : 'password'}
 							fullWidth
-							onChange={(e) =>
-								setCredentials({
-									...credentials,
-									password: e.target.value,
-								})
+							helperText={
+								<>
+									<Typography>Password should</Typography>
+									<ul style={{ listStyle: 'none' }}>
+										<li
+											className={
+												passValidation.length
+													? classes.passed
+													: classes.failed
+											}
+										>
+											Contain at least 8 characters
+										</li>
+										<li
+											className={
+												passValidation.alpha
+													? classes.passed
+													: classes.failed
+											}
+										>
+											Have at least one letter
+										</li>
+										<li
+											className={
+												passValidation.digit
+													? classes.passed
+													: classes.failed
+											}
+										>
+											Have at least one number
+										</li>
+										<li
+											className={
+												passValidation.symbol
+													? classes.passed
+													: classes.failed
+											}
+										>
+											Have at least one special symbol: @$!%*#?&
+										</li>
+									</ul>
+								</>
 							}
+							onChange={(e) => {
+								const val = e.target.value;
+
+								setPassValidation({
+									length: val.length >= 8,
+									alpha: val.match(/[a-z]/i) !== null,
+									digit: val.match(/[0-9]/) !== null,
+									symbol: val.match(/[@$!%*#?&]/) !== null,
+								});
+
+								setPassword({ ...password, val });
+							}}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
 										<PasswordIcon />
 									</InputAdornment>
 								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							variant="outlined"
-							label="Confirm Password"
-							type="password"
-							fullWidth
-							onChange={(e) =>
-								setCredentials({
-									...credentials,
-									confirm: e.target.value,
-								})
-							}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment position="start">
-										<LockIcon />
+								endAdornment: (
+									<InputAdornment position="end">
+										<IconButton
+											onClick={() =>
+												setPassword({
+													...password,
+													show: !password.show,
+												})
+											}
+										>
+											{password.show ? <HideIcon /> : <ShowIcon />}
+										</IconButton>
 									</InputAdornment>
 								),
 							}}
@@ -197,53 +266,21 @@ const SignUp = () => {
 						</FormControl>
 					</Grid>
 					<Grid item xs={12}>
-						<FormControlLabel
-							control={<Checkbox />}
-							onChange={(e) => {
-								setConsent({
-									...consent,
-									terms: e.target.checked,
-								});
-							}}
-							label={
-								<Typography>
-									{'I have read and agree to the '}
-									<Link to="">{'Terms and Conditions'}</Link>.
-								</Typography>
-							}
-						/>
-						<FormControlLabel
-							control={<Checkbox />}
-							onChange={(e) => {
-								setConsent({
-									...consent,
-									privacy: e.target.checked,
-								});
-							}}
-							label={
-								<Typography>
-									{'I have read and agree to the '}
-									<Link to="">{'Privacy Policy'}</Link>.
-								</Typography>
-							}
-						/>
-					</Grid>
-					<Grid item xs={12}>
 						<Button
 							variant="contained"
 							color="primary"
 							type="submit"
 							fullWidth
 						>
-							Signup
+							Sign Up
 						</Button>
 					</Grid>
-				</Grid>
-				<Grid container justify="flex-end">
-					<Grid item>
-						<Link to="/login" variant="body2">
-							{'Already have an account? Log in'}
-						</Link>
+					<Grid item xs={12}>
+						<Box mt={-2} textAlign="right">
+							<Link to="/login" variant="body2">
+								{'Already have an account? Log in'}
+							</Link>
+						</Box>
 					</Grid>
 				</Grid>
 			</form>
