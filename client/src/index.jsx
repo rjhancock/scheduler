@@ -2,12 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Redux
-import { Provider } from 'react-redux';
-import store from './app/store';
-
 // Components
 import App from './components/App';
+import { Provider } from './context/Context';
 
 // Stylesheets
 import '@atlaskit/css-reset';
@@ -15,7 +12,7 @@ import './index.css';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
+		<Provider>
 			<App />
 		</Provider>
 	</React.StrictMode>,

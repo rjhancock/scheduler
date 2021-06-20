@@ -1,5 +1,4 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useSelector, useDispatch } from 'react-redux';
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -7,16 +6,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Ticket from '../Ticket';
 import ActionList from '../ActionList';
 
-import { DELETE_COLUMN } from '../../features/columns/columnsSlice';
-
 import './Column.css';
 
-const Column = ({ id, column, index }) => {
-	const tickets = useSelector((state) => state.tickets);
-	const dispatch = useDispatch();
-
+const Column = ({ column, index, DeleteColumn }) => {
+	console.log({ cid: column.id, index });
 	return (
-		<Draggable draggableId={id} index={index}>
+		<Draggable draggableId={column.id} index={index}>
 			{(provided) => (
 				<div
 					className="col"
@@ -27,12 +22,12 @@ const Column = ({ id, column, index }) => {
 					<ActionList>
 						<IconButton
 							aria-label="delete"
-							onClick={() => dispatch(DELETE_COLUMN({ cid: id }))}
+							onClick={() => DeleteColumn(column.id)}
 						>
 							<DeleteIcon />
 						</IconButton>
 					</ActionList>
-					<Droppable droppableId={id} type="ticket">
+					<Droppable droppableId={column.id} type="ticket">
 						{(provided, snapshot) => (
 							<div
 								className={`ticket-list${
@@ -41,13 +36,10 @@ const Column = ({ id, column, index }) => {
 								{...provided.droppableProps}
 								ref={provided.innerRef}
 							>
-								{column.ticketIds.map((tid, index) => {
-									const ticket = tickets[tid];
-
+								{column.tickets.map((ticket, index) => {
 									return (
 										<Ticket
-											key={tid}
-											id={tid}
+											key={ticket.id}
 											ticket={ticket}
 											index={index}
 										/>
