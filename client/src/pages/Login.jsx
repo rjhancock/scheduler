@@ -1,3 +1,4 @@
+import { useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -11,20 +12,48 @@ import {
 
 import PersonIcon from '@material-ui/icons/PersonOutlineOutlined';
 import PasswordIcon from '@material-ui/icons/LockOutlined';
+import { Context } from '../context/Context';
+import axios from 'axios';
+import { LoginStart, LoginSuccess, LoginFailure } from '../context/Actions';
 
 const Login = () => {
+	const userRef = useRef();
+	const passwordRef = useRef();
+	const { dispatch, isFetching } = useContext(Context);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		dispatch(LoginStart());
+		try {
+			const res = await axios.post('/auth/login', {
+				username: userRef.current.value,
+				password: passwordRef.current.value,
+			});
+			dispatch(LoginSuccess(res.data));
+			// If creator login
+			if (res.data.role % 2) {
+				return window.location.replace(`/${res.data.username}`);
+			}
+			window.location.replace('/creators');
+		} catch (err) {
+			console.log({ err });
+			dispatch(LoginFailure());
+		}
+	};
+
 	return (
 		<Container component="main" maxWidth="sm">
 			<Typography variant="h4" component="h1" align="center">
 				{'Login'}
 			</Typography>
-			<form noValidate>
+			<form onSubmit={handleSubmit}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField
 							variant="outlined"
 							label="Username"
 							fullWidth
+							inputRef={userRef}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -40,6 +69,7 @@ const Login = () => {
 							label="Password"
 							type="password"
 							fullWidth
+							inputRef={passwordRef}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position="start">
@@ -53,7 +83,13 @@ const Login = () => {
 						</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<Button variant="contained" color="primary" fullWidth>
+						<Button
+							variant="contained"
+							color="primary"
+							fullWidth
+							type="submit"
+							disabled={isFetching}
+						>
 							Login
 						</Button>
 					</Grid>
