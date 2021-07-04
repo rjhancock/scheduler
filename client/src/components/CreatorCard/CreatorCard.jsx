@@ -28,6 +28,18 @@ const useStyles = makeStyles({
 const CreatorCard = () => {
 	const classes = useStyles();
 
+	const tags = [
+		'Lorem',
+		'ipsum',
+		'dolor',
+		'sit',
+		'amet',
+		'consectetur',
+		'adipisicing',
+		'elit',
+		'Natus',
+		'voluptatibus',
+	];
 	return (
 		<Card className={classes.root}>
 			<CardMedia
@@ -36,18 +48,18 @@ const CreatorCard = () => {
 			/>
 			<CardContent>
 				<Typography variant="h5" component="h2">
-					Cypuss
+					Creator
 				</Typography>
 			</CardContent>
 			<CardActions className={classes.chip}>
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
-				<Chip label="Tags" component="a" href="" clickable />
+				{[...new Array(Math.floor(Math.random() * 6) + 1)].map((_) => (
+					<Chip
+						label={tags[Math.floor(Math.random() * tags.length)]}
+						component="a"
+						href=""
+						clickable
+					/>
+				))}
 			</CardActions>
 			<CardActions>
 				<IconButton aria-label="add to favorites">
