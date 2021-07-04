@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+
+import { Context } from '../../context/Context';
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -9,12 +11,17 @@ import ActionList from '../ActionList';
 
 import './Column.css';
 
-const Column = ({ column, index, deleteColumn, renameColumn }) => {
+const Column = ({ column, index, draggable, deleteColumn, renameColumn }) => {
 	const [renaming, setRenaming] = useState(false);
 	const [name, setName] = useState(column.title);
 
 	return (
-		<Draggable draggableId={column.id} index={index}>
+		<Draggable
+			draggableId={column.id}
+			index={index}
+			// Only allow dragging if the user is a creator
+			isDragDisabled={!draggable}
+		>
 			{(provided) => (
 				<div
 					className="col"
@@ -64,6 +71,7 @@ const Column = ({ column, index, deleteColumn, renameColumn }) => {
 											key={ticket.id}
 											ticket={ticket}
 											index={index}
+											draggable={draggable}
 										/>
 									);
 								})}

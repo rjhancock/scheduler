@@ -1,13 +1,18 @@
+import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+
+import { Context } from '../../context/Context';
 
 import './Ticket.css';
 
-const Ticket = ({ ticket, index }) => {
+const Ticket = ({ ticket, index, draggable }) => {
+	const { user } = useContext(Context);
+
 	return (
 		<Draggable
 			draggableId={ticket.id}
 			index={index}
-			// isDragDisabled={true} // Prevents this draggable from being dragged
+			isDragDisabled={!draggable}
 		>
 			{(provided, snapshot) => (
 				<div

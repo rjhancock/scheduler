@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { Context } from '../../context/Context';
+
 import { useImmer } from 'use-immer';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -14,6 +17,7 @@ import Column from '../Column';
 import './Board.css';
 
 const Board = () => {
+	const { user } = useContext(Context);
 	// const [ticketId, setTicketId] = userImmer(5);
 	const [tickets, setTickets] = useImmer({
 		t1: { id: 't1', content: 'Take out the garbage' },
@@ -137,6 +141,12 @@ const Board = () => {
 		return MoveTicket(source, destination, draggableId);
 	};
 
+	const isUsersPage = () => {
+		if (!user) return false;
+		if (user.username !== window.location.pathname.slice(1)) return false;
+		return true;
+	};
+
 	return (
 		<DragDropContext
 			// onDragStart
@@ -169,6 +179,7 @@ const Board = () => {
 										index={index}
 										renameColumn={RenameColumn}
 										deleteColumn={DeleteColumn}
+										draggable={isUsersPage()}
 									/>
 								);
 							})}
