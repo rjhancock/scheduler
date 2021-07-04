@@ -2,10 +2,10 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import './Ticket.css';
 
-const Ticket = ({ id, ticket, index }) => {
+const Ticket = ({ ticket, index }) => {
 	return (
 		<Draggable
-			draggableId={id}
+			draggableId={ticket.id}
 			index={index}
 			// isDragDisabled={true} // Prevents this draggable from being dragged
 		>
