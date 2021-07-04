@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from './middleware/database.js';
 
 import authRoutes from './routes/auth.js';
+import creatorRoutes from './routes/creator.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 connectDB();
 
 app.use('/api/auth', authRoutes);
+app.use('/api/creators', creatorRoutes);
 
 const PORT = process.env.PORT;
 const MODE = process.env.NODE_ENV;
