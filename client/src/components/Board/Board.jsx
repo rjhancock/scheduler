@@ -76,7 +76,6 @@ const Board = () => {
 	const DeleteColumn = (cid) => {
 		setColumns((draft) => {
 			delete draft[cid];
-			return;
 		});
 		setOrder((draft) => {
 			const index = draft.findIndex((col) => col === cid);
@@ -132,8 +131,6 @@ const Board = () => {
 		// })
 	};
 
-	console.log({ order });
-	console.log({ columns });
 	return (
 		<DragDropContext
 			// onDragStart
@@ -161,7 +158,7 @@ const Board = () => {
 								};
 								return (
 									<Column
-										key={index}
+										key={cid}
 										column={column}
 										index={index}
 										rename={RenameColumn}
