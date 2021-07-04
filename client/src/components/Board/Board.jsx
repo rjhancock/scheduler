@@ -83,12 +83,36 @@ const Board = () => {
 		});
 	};
 	const RenameColumn = (cid, title) => {
-		setColumns((draft) => (draft[cid].title = title));
+		setColumns((draft) => {
+			draft[cid].title = title;
+		});
 	};
 	const ReorderColumns = (src, dst, column) => {
 		setOrder((draft) => {
 			draft.splice(src, 1);
 			draft.splice(dst, 0, column);
+		});
+	};
+
+	const MoveTicket = (src, dst, ticket) => {
+		setColumns((draft) => {
+			// Remove the ticket from the column it started in
+			const start = draft[src.droppableId].tickets;
+			start.splice(src.index, 1);
+
+			// Add the ticket to the column it is ending in
+			const end = draft[dst.droppableId].tickets;
+			end.splice(dst.index, 0, ticket);
+		});
+	};
+	const ReorderTickets = (src, dst, ticket) => {
+		setColumns((draft) => {
+			// Get the list of tickets on this column
+			const tickets = draft[src.droppableId].tickets;
+
+			// Insert the ticket into the column's ticket list
+			tickets.splice(src.index, 1);
+			tickets.splice(dst.index, 0, ticket);
 		});
 	};
 
@@ -102,33 +126,15 @@ const Board = () => {
 		// Handle column reorder
 		if (type === 'column') {
 			return ReorderColumns(source.index, destination.index, draggableId);
-			// return dispatch(
-			// 	REORDER_COLUMNS({
-			// 		source: source.index,
-			// 		destination: destination.index,
-			// 		column: draggableId,
-			// 	})
-			// );
 		}
 
 		// Handle staying in the same column
 		if (isSameColumn(source, destination)) {
-			// return dispatch(
-			// 	REORDER_TICKETS({
-			// 		source,
-			// 		destination,
-			// 		ticket: draggableId,
-			// 	})
-			// );
+			return ReorderTickets(source, destination, draggableId);
 		}
 
 		// Handle ticket moving columns
-		// return dispatch();
-		// MOVE_TICKET({
-		// 	source,
-		// 	destination,
-		// 	ticket: draggableId,
-		// })
+		return MoveTicket(source, destination, draggableId);
 	};
 
 	return (
@@ -161,8 +167,8 @@ const Board = () => {
 										key={cid}
 										column={column}
 										index={index}
-										rename={RenameColumn}
-										DeleteColumn={DeleteColumn}
+										renameColumn={RenameColumn}
+										deleteColumn={DeleteColumn}
 									/>
 								);
 							})}
