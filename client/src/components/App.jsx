@@ -1,5 +1,10 @@
 import { useContext } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Route,
+	Redirect,
+	Switch,
+} from 'react-router-dom';
 import { Context } from '../context/Context';
 import {
 	Creators,
@@ -22,9 +27,9 @@ const App = () => {
 					{!user ? (
 						<SignUp />
 					) : user.role % 2 ? (
-						<Dashboard />
+						<Redirect to={`/${user.username}`} />
 					) : (
-						<Creators />
+						<Redirect to="/creators" />
 					)}
 				</Route>
 				<Route path="/login" exact component={() => <Login />} />
