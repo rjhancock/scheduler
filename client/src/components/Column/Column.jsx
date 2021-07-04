@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -8,8 +9,10 @@ import ActionList from '../ActionList';
 
 import './Column.css';
 
-const Column = ({ column, index, DeleteColumn }) => {
-	console.log({ cid: column.id, index });
+const Column = ({ column, index, deleteColumn, renameColumn }) => {
+	const [renaming, setRenaming] = useState(false);
+	const [name, setName] = useState(column.title);
+
 	return (
 		<Draggable draggableId={column.id} index={index}>
 			{(provided) => (
@@ -18,11 +21,30 @@ const Column = ({ column, index, DeleteColumn }) => {
 					{...provided.draggableProps}
 					ref={provided.innerRef}
 				>
-					<h3 {...provided.dragHandleProps}>{column.title}</h3>
+					<h3
+						{...provided.dragHandleProps}
+						onDoubleClick={() => setRenaming(true)}
+					>
+						{renaming ? (
+							<input
+								type="text"
+								autoFocus
+								onFocus={(e) => e.target.select()}
+								onChange={(e) => setName(e.target.value)}
+								onBlur={() => {
+									setRenaming(false);
+									if (name) renameColumn(column.id, name);
+								}}
+								defaultValue={column.title}
+							/>
+						) : (
+							column.title
+						)}
+					</h3>
 					<ActionList>
 						<IconButton
 							aria-label="delete"
-							onClick={() => DeleteColumn(column.id)}
+							onClick={() => deleteColumn(column.id)}
 						>
 							<DeleteIcon />
 						</IconButton>

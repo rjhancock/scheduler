@@ -28,3 +28,7 @@
 .drop {
 	background-color: skyblue;
 }
+
+h3 > input {
+	font-size: inherit;
+}
