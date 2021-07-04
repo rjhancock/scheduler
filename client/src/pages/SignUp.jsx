@@ -5,7 +5,7 @@ import axios from 'axios';
 import {
 	Box,
 	Button,
-	Checkbox,
+	// Checkbox,
 	Container,
 	FormControl,
 	FormControlLabel,
@@ -24,8 +24,8 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PasswordIcon from '@material-ui/icons/LockOutlined';
 import ShowIcon from '@material-ui/icons/VisibilityOutlined';
 import HideIcon from '@material-ui/icons/VisibilityOffOutlined';
-import FailIcon from '@material-ui/icons/Close';
-import SuccessIcon from '@material-ui/icons/Check';
+// import FailIcon from '@material-ui/icons/Close';
+// import SuccessIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles({
 	passed: {
@@ -59,7 +59,7 @@ const SignUp = () => {
 	});
 	const [email, setEmail] = useState('');
 	const [role, setRole] = useState(0);
-	const [consent, setConsent] = useState({
+	const [consent] = useState({
 		terms: false,
 		privacy: false,
 	});
@@ -123,7 +123,7 @@ const SignUp = () => {
 			</Typography>
 			<form onSubmit={handleSubmit}>
 				<Grid container spacing={2}>
-					<Grid item xs={12}>
+					<Grid item xs={6}>
 						<TextField
 							error={serverErrors.username ? true : false}
 							helperText={
@@ -142,7 +142,7 @@ const SignUp = () => {
 							}}
 						/>
 					</Grid>
-					<Grid item xs={12}>
+					<Grid item xs={6}>
 						<TextField
 							error={serverErrors.email ? true : false}
 							helperText={serverErrors.email ? serverErrors.email : ''}
