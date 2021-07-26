@@ -4,6 +4,11 @@
 	flex: 1;
 }
 
+body {
+	color: white;
+	background-color: hsl(0, 0%, 12%);
+}
+
 .flex {
 	display: flex;
 }
