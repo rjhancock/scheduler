@@ -25,10 +25,16 @@ const Login = () => {
 		e.preventDefault();
 		dispatch(LoginStart());
 		try {
-			const res = await axios.post('/auth/login', {
-				username: userRef.current.value,
-				password: passwordRef.current.value,
-			});
+			const res = await axios.post(
+				'//localhost:8080/users/login',
+				{},
+				{
+					auth: {
+						username: userRef.current.value,
+						password: passwordRef.current.value,
+					},
+				}
+			);
 			dispatch(LoginSuccess(res.data));
 			// If creator login
 			if (res.data.role % 2) {
