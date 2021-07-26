@@ -8,25 +8,25 @@ const Navigation = () => {
 		<nav>
 			<Link to="/">React Multi-Page Website</Link>
 
-			<div>
-				<ul>
-					<li>
-						<Link to="/">Home</Link>
-					</li>
-					<li>
-						<Link to="/cypuss">Cypuss</Link>
-					</li>
-					{!user ? (
+			<ul>
+				<li>
+					<Link to="/">Home</Link>
+				</li>
+				{!user ? (
+					<>
 						<li>
-							<Link to="/signup">Sign Up</Link>
+							<Link to="/auth/signup">Sign Up</Link>
 						</li>
-					) : (
 						<li>
-							<Link to="/logout">Logout</Link>
+							<Link to="/auth/login">Login</Link>
 						</li>
-					)}
-				</ul>
-			</div>
+					</>
+				) : (
+					<li>
+						<Link to="/auth/logout">Logout</Link>
+					</li>
+				)}
+			</ul>
 		</nav>
 	);
 };
