@@ -6,8 +6,8 @@ import { Context } from '../../context/Context';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import Ticket from '../Ticket';
-import ActionList from '../ActionList';
+import Ticket from '../ticket/Ticket';
+import ActionList from '../actionList/ActionList';
 
 import './Column.css';
 
@@ -50,6 +50,7 @@ const Column = ({ column, index, draggable, deleteColumn, renameColumn }) => {
 					</h3>
 					<ActionList>
 						<IconButton
+							color="inherit"
 							aria-label="delete"
 							onClick={() => deleteColumn(column.id)}
 						>

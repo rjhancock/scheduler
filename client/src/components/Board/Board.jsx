@@ -1,24 +1,16 @@
-import { useContext } from 'react';
-import { Context } from '../../context/Context';
+// import { useContext } from 'react';
+// import { Context } from '../../context/Context';
 
 import { useImmer } from 'use-immer';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-// import {
-// 	// ADD_COLUMN,
-// 	MOVE_TICKET,
-// 	// RENAME_COLUMN,
-// 	REORDER_COLUMNS,
-// 	REORDER_TICKETS,
-// } from '../../features/columns/columnsSlice';
-
-import Column from '../Column';
+import Column from '../column/Column';
 
 import './Board.css';
 
 const Board = () => {
-	const { user } = useContext(Context);
-	// const [ticketId, setTicketId] = userImmer(5);
+	const user = { username: 'Cypuss' }; //useContext(Context);
+	// const [ticketId, setTicketId] = useImmer(5);
 	const [tickets, setTickets] = useImmer({
 		t1: { id: 't1', content: 'Take out the garbage' },
 		t2: { id: 't2', content: 'Watch my favorite show' },
