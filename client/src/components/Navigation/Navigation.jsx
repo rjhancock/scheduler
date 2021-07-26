@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { Context } from '../../context/Context';
 
 const Navigation = () => {
+	const { user } = useContext(Context);
 	return (
 		<nav>
 			<Link to="/">React Multi-Page Website</Link>
@@ -13,9 +16,15 @@ const Navigation = () => {
 					<li>
 						<Link to="/cypuss">Cypuss</Link>
 					</li>
-					<li>
-						<Link to="/contact">Contact</Link>
-					</li>
+					{!user ? (
+						<li>
+							<Link to="/signup">Sign Up</Link>
+						</li>
+					) : (
+						<li>
+							<Link to="/logout">Logout</Link>
+						</li>
+					)}
 				</ul>
 			</div>
 		</nav>
