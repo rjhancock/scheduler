@@ -13,7 +13,7 @@ import {
 
 import InfoIcon from '@material-ui/icons/Info';
 
-import Navigation from '../components/Navigation';
+import Navigation from '../../../components/navigation/Navigation';
 
 const Gallery = () => {
 	const { creator } = useParams();
@@ -44,8 +44,8 @@ const Gallery = () => {
 			<Navigation />
 			<Container maxWidth="xl">
 				<Box textAlign="center">
-					<Button href={`/${creator}`} variant="contained" color="primary">
-						Request a Commission
+					<Button href={'/'} variant="contained" color="primary">
+						Check My Schedule
 					</Button>
 				</Box>
 				<GridList cellHeight={225} cols={3}>

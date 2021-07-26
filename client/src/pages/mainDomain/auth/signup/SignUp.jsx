@@ -51,6 +51,7 @@ const Copyright = () => {
 };
 
 const SignUp = () => {
+	const SYMBOLS = '@$!%*#?&';
 	const classes = useStyles();
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState({
@@ -77,7 +78,7 @@ const SignUp = () => {
 		e.preventDefault();
 		setServerErrors({});
 		try {
-			const res = await axios.post('/auth/signup', {
+			const res = await axios.post('http://localhost:5000/auth/signup', {
 				username,
 				email,
 				password: password.val,
@@ -205,7 +206,7 @@ const SignUp = () => {
 													: classes.failed
 											}
 										>
-											Have at least one special symbol: @$!%*#?&
+											{`Have at least one special symbol: ${SYMBOLS}`}
 										</li>
 									</ul>
 								</>
@@ -217,7 +218,8 @@ const SignUp = () => {
 									length: val.length >= 8,
 									alpha: val.match(/[a-z]/i) !== null,
 									digit: val.match(/[0-9]/) !== null,
-									symbol: val.match(/[@$!%*#?&]/) !== null,
+									symbol:
+										val.match(new RegExp(`[${SYMBOLS}]`)) !== null,
 								});
 
 								setPassword({ ...password, val });
@@ -277,7 +279,7 @@ const SignUp = () => {
 					</Grid>
 					<Grid item xs={12}>
 						<Box mt={-2} textAlign="right">
-							<Link to="/login" variant="body2">
+							<Link to="/auth/login" variant="body2">
 								{'Already have an account? Log in'}
 							</Link>
 						</Box>

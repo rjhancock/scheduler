@@ -1,7 +1,7 @@
 import { Box, Container } from '@material-ui/core';
 
-import Navigation from '../components/Navigation';
-import CreatorCard from '../components/CreatorCard';
+import Navigation from '../../../components/navigation/Navigation';
+import CreatorCard from '../../../components/creatorCard/CreatorCard';
 
 const Creators = () => {
 	const creators = [...new Array(15)];

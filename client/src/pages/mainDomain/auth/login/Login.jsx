@@ -12,9 +12,13 @@ import {
 
 import PersonIcon from '@material-ui/icons/PersonOutlineOutlined';
 import PasswordIcon from '@material-ui/icons/LockOutlined';
-import { Context } from '../context/Context';
+import { Context } from '../../../../context/Context';
 import axios from 'axios';
-import { LoginStart, LoginSuccess, LoginFailure } from '../context/Actions';
+import {
+	LoginStart,
+	LoginSuccess,
+	LoginFailure,
+} from '../../../../context/Actions';
 
 const Login = () => {
 	const userRef = useRef();
@@ -25,7 +29,7 @@ const Login = () => {
 		e.preventDefault();
 		dispatch(LoginStart());
 		try {
-			const res = await axios.post('/auth/login', {
+			const res = await axios.post('http://localhost:5000/auth/login', {
 				username: userRef.current.value,
 				password: passwordRef.current.value,
 			});
@@ -96,7 +100,7 @@ const Login = () => {
 				</Grid>
 				<Grid container justify="flex-end">
 					<Grid item>
-						<Link to="/signup" variant="body2">
+						<Link to="/auth/signup" variant="body2">
 							{'Need an account? Sign up'}
 						</Link>
 					</Grid>

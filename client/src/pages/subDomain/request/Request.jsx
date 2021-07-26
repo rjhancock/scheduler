@@ -8,7 +8,7 @@ import {
 	Typography,
 } from '@material-ui/core';
 
-import Navigation from '../components/Navigation';
+import Navigation from '../../../components/navigation/Navigation';
 
 const yyyy_mm_dd = () => {
 	const now = new Date();
